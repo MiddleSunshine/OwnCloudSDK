@@ -1,0 +1,12 @@
+{
+    "name": "yangqingxian/own-cloud-sdk",
+    "authors": [
+        {
+            "name": "yang",
+            "email": "yangqingxian@niaoni.la"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}
