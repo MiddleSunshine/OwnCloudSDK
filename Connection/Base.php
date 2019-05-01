@@ -11,8 +11,15 @@
  */
 namespace OwnCloudeSDK\Connection;
 
+require_once __DIR__."../vendor/autoload.php";
+
 use GuzzleHttp\Client;
 
+/**
+ * 基础类，其中封装一些公共方法
+ * Class Base
+ * @package OwnCloudeSDK\Connection
+ */
 class Base{
     protected $userName;
     protected $password;
