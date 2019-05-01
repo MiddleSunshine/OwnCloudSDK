@@ -12,6 +12,8 @@
 
 namespace OwnCloudeSDK\Connection;
 
+require_once __DIR__."/Base.php";
+
 /**
  * Delete请求封装
  * Class DeleteOperate

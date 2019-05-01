@@ -12,7 +12,7 @@
 
 namespace OwnCloudeSDK\Connection;
 
-require_once __DIR__."Base.php";
+require_once __DIR__."/Base.php";
 
 use GuzzleHttp\Psr7\Request;
 

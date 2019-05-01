@@ -12,12 +12,26 @@
 
 namespace OwnCloudeSDK\Connection;
 
+require_once __DIR__."/Base.php";
 
 use GuzzleHttp\Psr7\Request;
 
+/**
+ * move请求的封装
+ * Class MoveOperate
+ * @package OwnCloudeSDK\Connection
+ */
 class MoveOperate extends Base
 {
-    public function move($originalPath,$newPath,$isHttps){
+    /**
+     * move请求，常用于移动文件或者文件夹
+     * @param $originalPath string 源文件地址
+     * @param $newPath string 新地址，如果该地址不存在，不支持自动创建
+     * @param bool $isHttps 是否是https
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function move($originalPath,$newPath,$isHttps=true){
         $fullUrl=$this->getUrlPrefix($originalPath,$isHttps);
         $header=array(
             'Destination'=>$this->getUrlPrefix($newPath,$isHttps)

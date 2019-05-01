@@ -12,12 +12,26 @@
 
 namespace OwnCloudeSDK\Connection;
 
+require_once __DIR__."/Base.php";
 
 use GuzzleHttp\Psr7\Request;
 
+/**
+ * POST请求封装
+ * Class PostOperate
+ * @package OwnCloudeSDK\Connection
+ */
 class PostOperate extends Base
 {
-    public function post($url,$isHttps,$postData){
+    /**
+     * post请求
+     * @param $url string post文件地址
+     * @param $postData array post数据
+     * @param bool $isHttps 是否是https
+     * @return array
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function post($url,$postData,$isHttps=true){
         $fullUrl=$this->getUrlPrefix($url,$isHttps);
         try{
             $client=self::getClient();
