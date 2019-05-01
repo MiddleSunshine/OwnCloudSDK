@@ -25,7 +25,11 @@ class FilePathTest extends Base {
             $this->password,
             $this->isHttps
         );
-        $filePathData=$filePath->getFilePath();
-        print_r($filePathData);
+        try{
+            $filePathData=$filePath->getFilePath();
+        }catch (\Exception $e){
+            $this->assertTrue(false,$this->getException($e));
+        }
+        $this->assertTrue(true);
     }
 }

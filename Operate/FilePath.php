@@ -40,7 +40,7 @@ class FilePath extends Base
         $propfind=new PropfindOperate($this->userName,$this->password);
         $result=$propfind->propfind($searchDir,$this->isHttps);
         if($result['result']){
-            $xmlData=$result['data'];
+            $xmlData=$this->xmlReader($result['data']);
             $fileList=$this->parseXml($xmlData);
             return $fileList;
         }else{
@@ -112,6 +112,9 @@ class FilePath extends Base
             $fileFullPath=substr($value[self::XML_NAMESPACE."href"],18,strlen($value[self::XML_NAMESPACE."href"]));
             $file->filePath=urldecode($fileFullPath);// 文件完整路径
             $file->createTime=$createTime;
+            // 将已使用大小和剩余大小做比较
+            $file->usedBytes=humanData($file->usedBytes);
+            $file->availableBytes=humanData($file->usedBytes);
             $returnData[]=$file->toArray();
         }
         return $returnData;

@@ -26,4 +26,13 @@ class Base extends TestCase {
         $this->password=$config['password'];
         $this->isHttps=$config['is_https'];
     }
+
+    /**
+     * 辅助函数，获取异常的全部数据
+     * @param \Exception $e
+     * @return string
+     */
+    protected function getException(\Exception $e){
+        return $e->getMessage()."-".$e->getFile()."-".$e->getLine();
+    }
 }

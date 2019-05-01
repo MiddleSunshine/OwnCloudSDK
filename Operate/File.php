@@ -19,7 +19,7 @@ class File
     public $fileType;
     public $createTime;
     public $fileName;
-    public $usedBytes;
+    public $usedBytes=0;
     public $availableBytes=0;
     public $isFolder=true;
     public function toArray(){
