@@ -1,6 +1,6 @@
 <?php
 /**
- * File name: GetOperate.php
+ * File name: PostOperate.php
  * Author: 杨庆贤
  * Description:
  * Others:
@@ -15,15 +15,15 @@ namespace OwnCloudeSDK\Connection;
 
 use GuzzleHttp\Psr7\Request;
 
-class GetOperate extends Base
+class PostOperate extends Base
 {
-    public function get($url,$isHttps){
+    public function post($url,$isHttps,$postData){
         $fullUrl=$this->getUrlPrefix($url,$isHttps);
-        $client=self::getClient();
-        $request=new Request("GET",$fullUrl);
         try{
-            $response=$client->send($request);
-            return self::returnResult(true,"",$response);
+            $client=self::getClient();
+            $request=new Request("POST",$fullUrl);
+            $client->send($request,['form_params'=>$postData]);
+            return self::returnResult();
         }catch (\Exception $e){
             return self::returnResult(false,$e->getMessage());
         }

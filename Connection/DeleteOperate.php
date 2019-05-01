@@ -22,7 +22,7 @@ class DeleteOperate extends Base
             $client->delete($fullUrl);
             return self::returnResult();
         }catch (\Exception $e){
-            return self::returnResult(false,"删除操作执行失败",$e->getMessage());
+            return self::returnResult(false,$e->getMessage());
         }
     }
 }

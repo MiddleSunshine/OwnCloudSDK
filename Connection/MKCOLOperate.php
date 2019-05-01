@@ -1,6 +1,6 @@
 <?php
 /**
- * File name: GetOperate.php
+ * File name: MKCOLOperate.php
  * Author: 杨庆贤
  * Description:
  * Others:
@@ -15,15 +15,15 @@ namespace OwnCloudeSDK\Connection;
 
 use GuzzleHttp\Psr7\Request;
 
-class GetOperate extends Base
+class MKCOLOperate extends Base
 {
-    public function get($url,$isHttps){
+    public function mkcol($url,$isHttps){
         $fullUrl=$this->getUrlPrefix($url,$isHttps);
         $client=self::getClient();
-        $request=new Request("GET",$fullUrl);
         try{
-            $response=$client->send($request);
-            return self::returnResult(true,"",$response);
+            $request=new Request("MKCOL",$fullUrl);
+            $client->send($request);
+            return self::returnResult();
         }catch (\Exception $e){
             return self::returnResult(false,$e->getMessage());
         }

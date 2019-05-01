@@ -1,6 +1,6 @@
 <?php
 /**
- * File name: GetOperate.php
+ * File name: PropfindOperate.php
  * Author: 杨庆贤
  * Description:
  * Others:
@@ -15,15 +15,15 @@ namespace OwnCloudeSDK\Connection;
 
 use GuzzleHttp\Psr7\Request;
 
-class GetOperate extends Base
+class PropfindOperate extends Base
 {
-    public function get($url,$isHttps){
-        $fullUrl=$this->getUrlPrefix($url,$isHttps);
-        $client=self::getClient();
-        $request=new Request("GET",$fullUrl);
+    public function propfind($searchDir,$isHttps){
+        $fullUrl=$this->getUrlPrefix($searchDir,$isHttps);
         try{
+            $client=self::getClient();
+            $request=new Request("PROPFIND",$fullUrl);
             $response=$client->send($request);
-            return self::returnResult(true,"",$response);
+            return self::returnResult(true,"",$response->getBody()->getContents());
         }catch (\Exception $e){
             return self::returnResult(false,$e->getMessage());
         }
