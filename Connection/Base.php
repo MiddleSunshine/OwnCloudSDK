@@ -11,7 +11,7 @@
  */
 namespace OwnCloudeSDK\Connection;
 
-require_once __DIR__."../vendor/autoload.php";
+require_once __DIR__."/../vendor/autoload.php";
 
 use GuzzleHttp\Client;
 
@@ -30,7 +30,7 @@ class Base{
         $this->password=$password;
     }
     protected function getUrlPrefix($url,$isHttps=true){
-        return ($isHttps?"https":"http")."//".$this->userName.":".$this->password."@".$url;
+        return ($isHttps?"https":"http")."://".$this->userName.":".$this->password."@".$url;
     }
     protected static function returnResult($result=true,$message="",$data=null){
         return array(
