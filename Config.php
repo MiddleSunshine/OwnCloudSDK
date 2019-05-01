@@ -10,8 +10,11 @@
  *   Modification
  */
 return array(
-    'domain'=>"pdtowncloud.pewinner.com",
-    'user_name'=>"admin",
-    'password'=>"admin",
-    'is_https'=>true
+    array(
+        'domain'=>"pdtowncloud.pewinner.com",
+        'user_name'=>"admin",
+        'password'=>"admin",
+        'is_https'=>true
+    )
 );
+

@@ -12,6 +12,7 @@
 
 namespace OwnCloudeSDK\Operate;
 
+use OwnCloudeSDK\Connection\GetOperate;
 use OwnCloudeSDK\Connection\PropfindOperate;
 use Sabre\Xml\ParseException;
 use Sabre\Xml\Reader;
@@ -46,6 +47,26 @@ class FilePath extends Base
         }else{
             throw new \Exception($result['message']);
         }
+    }
+
+    /**
+     * 搜索指定目录下内容，不支持全局搜索
+     * @param string $searchDir 搜索目录
+     * @param string $searchContent 搜索内容
+     * @param int $page 针对结果做分页效果
+     * @param int $size
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function search($searchDir="/",$searchContent="",$page=1,$size=10){
+        $queryFilePath='files'.$searchDir;
+        $url=$this->domain.self::SEARCH_API."?query=".$searchContent."&inApps[].".$queryFilePath."&page=".$page."&size=".$size;
+        $get=new GetOperate($this->userName,$this->password);
+        $result=$get->get($url,$this->isHttps);
+        if(!$result['result']){
+            throw new \Exception($result['message']);
+        }
+        return $result['data'];
     }
 
     /**
