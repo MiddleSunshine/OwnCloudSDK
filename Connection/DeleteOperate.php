@@ -34,7 +34,7 @@ class DeleteOperate extends Base
             $client->delete($fullUrl);
             return self::returnResult();
         }catch (\Exception $e){
-            return self::returnResult(false,$e->getMessage());
+            return self::returnResult(false,$e->getMessage(),$e->getCode());
         }
     }
 }

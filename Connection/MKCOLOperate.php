@@ -15,6 +15,7 @@ namespace OwnCloudeSDK\Connection;
 require_once __DIR__."/Base.php";
 
 use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * MKCOL请求封装
@@ -38,7 +39,7 @@ class MKCOLOperate extends Base
             $client->send($request);
             return self::returnResult();
         }catch (\Exception $e){
-            return self::returnResult(false,$e->getMessage());
+            return self::returnResult(false,$e->getMessage(),$e->getCode());
         }
     }
 }
