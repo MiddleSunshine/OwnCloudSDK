@@ -12,7 +12,11 @@
 
 namespace OwnCloudeSDK\Exception;
 
-
+/**
+ * 在同一目录下上传同名文件时，就会抛出该异常
+ * Class FileExist
+ * @package OwnCloudeSDK\Exception
+ */
 class FileExist extends \Exception
 {
 
