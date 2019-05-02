@@ -54,7 +54,7 @@ class FileShareTest extends Base
         $fileShare->setFileSharePermission(FileShare::SHARE_PERMISSION);
         try{
             $shareUserId=$config['another_user_name'];
-            $shareType=FileShare::SHARE_PUBLIC;
+            $shareType=FileShare::SHARE_USER;
             $shareUrl=$fileShare->createFileShare($this->shareFolder,$shareUserId,$shareType);
             if($shareUrl && $shareType==FileShare::SHARE_PUBLIC){
                 print "\r\n分享的url为:{$shareUrl}\r\n";
@@ -68,6 +68,33 @@ class FileShareTest extends Base
         catch (\Exception $e){
             $this->assertTrue(false,$this->getException($e));
         }
+    }
+    public function testCreateFileShareWithPassword(){
+        $config=$this->getConfigData();
+        $fileShare=new FileShare(
+            $config['domain'],
+            $config['user_name'],
+            $config['password'],
+            $config['is_https']
+        );
+        $password="phpunit";
+        try{
+            $shareUrl=$fileShare->createFileShareWithPassword($this->shareFolder,$password,FileShare::getExpireDate("2019","06","01"));
+            print "\r\n创建分享,地址为：";
+            print $shareUrl."\r\n";
+            print "密码为：";
+            print $password."\r\n";
+            $this->assertTrue(true);
+        }catch (alreadyShared $e){
+            $this->assertTrue(false,"当前分享对象已拥有该目录权限");
+        }catch (FolderNotExist $e){
+            $this->assertTrue(false,"指定目录/文件夹不存在");
+        }
+        catch (\Exception $e){
+            $this->assertTrue(false,$this->getException($e));
+        }
+
+
     }
     protected function tearDown(): void
     {
