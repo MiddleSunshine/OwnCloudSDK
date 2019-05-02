@@ -42,7 +42,7 @@ class MoveOperate extends Base
             $client->send($request);
             return self::returnResult();
         }catch (\Exception $e){
-            return self::returnResult(false,$e->getMessage());
+            return self::returnResult(false,$e->getMessage(),$e->getCode());
         }
     }
 }

@@ -18,6 +18,7 @@ use OwnCloudeSDK\Connection\MoveOperate;
 use OwnCloudeSDK\Exception\FolderExist;
 use OwnCloudeSDK\Exception\FolderNotExist;
 use OwnCloudeSDK\Exception\UnlegalName;
+use OwnCloudeSDK\Exception\WrongPath;
 
 require_once __DIR__."/Base.php";
 require_once __DIR__."/../Connection/MKCOLOperate.php";
@@ -26,6 +27,7 @@ require_once __DIR__."/../Connection/MoveOperate.php";
 require_once __DIR__."/../Exceptions/FolderExist.php";
 require_once __DIR__."/../Exceptions/FolderNotExist.php";
 require_once __DIR__."/../Exceptions/UnlegalName.php";
+require_once __DIR__."/../Exceptions/WrongPath.php";
 
 class Folder extends Base
 {
@@ -66,6 +68,7 @@ class Folder extends Base
      * @throws \GuzzleHttp\Exception\GuzzleException
      * @throws FolderExist
      * @throws UnlegalName
+     * @throws WrongPath
      */
     public function createFolder($folderFullName) {
         if(!self::checkSpecialFileName($folderFullName)){
@@ -78,6 +81,9 @@ class Folder extends Base
             // 如果返回码是 405 则表示目录已存在
             if(intval($result['data'])==405){
                 throw new FolderExist($folderFullName."目录已存在");
+            }
+            if(intval($result['data'])==409){
+                throw new WrongPath("系统暂时不支持创建多级目录");
             }
             throw new \Exception($result['message']);
         }
@@ -107,8 +113,12 @@ class Folder extends Base
      * @param $newFolderDir string 待移动的文件夹路径
      * @throws UnlegalName
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws WrongPath
      */
     public function moveFolder($nowFolderDir,$newFolderDir){
+        if($nowFolderDir==$newFolderDir){
+            throw new WrongPath("不允许在同一目录中移动");
+        }
         if(!self::checkSpecialFileName($newFolderDir)){
             throw new UnlegalName("新目录存在非法字符串");
         }
@@ -118,6 +128,9 @@ class Folder extends Base
         $move=$this->getMove();
         $result=$move->move($nowUrl,$nextUrl,$this->isHttps);
         if(!$result['result']){
+            if(intval($result['data'])==409){
+                throw new WrongPath("待移动目录不存在");
+            }
             throw new \Exception($result['message']);
         }
     }
