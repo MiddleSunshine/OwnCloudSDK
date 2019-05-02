@@ -24,7 +24,8 @@ class Base extends TestCase {
             'domain'=>"pdtowncloud.pewinner.com",
             'user_name'=>"admin",
             'password'=>"admin",
-            'is_https'=>true
+            'is_https'=>true,
+            'another_user_name'=>"owncloud"
         );
     }
 }
