@@ -16,10 +16,12 @@ use OwnCloudeSDK\Exception\FolderExist;
 use OwnCloudeSDK\Exception\FolderNotExist;
 use OwnCloudeSDK\Exception\UnlegalName;
 use OwnCloudeSDK\Exception\WrongPath;
+use OwnCloudeSDK\Operate\FilePath;
 use OwnCloudeSDK\Operate\Folder;
 
 require_once __DIR__."/Base.php";
 require_once __DIR__."/../Operate/Folder.php";
+require_once __DIR__."/../Operate/FilePath.php";
 
 class FolderTest extends Base
 {
@@ -61,7 +63,15 @@ class FolderTest extends Base
         );
         try{
             $folder->moveFolder($nowDir,$nextDir);
-            $this->assertTrue(true);
+            $filePath=new FilePath(
+                $config['domain'],
+                $config['user_name'],
+                $config['password'],
+                $config['is_https']
+            );
+            $dir=$this->moveFolderName;
+            $dirData=$filePath->getFilePath($dir);
+            $this->assertEquals(1,count($dirData),"文件移动失败");
         }catch (UnlegalName $e){
             $this->assertTrue(false,"目录存在非法字符串");
         }catch (WrongPath $e){
@@ -80,7 +90,6 @@ class FolderTest extends Base
             $config['is_https']
         );
         try{
-//            $folder->deleteFolder($this->folderName);
             $folder->deleteFolder($this->moveFolderName);
             $this->assertTrue(true);
         }catch (FolderNotExist $e){
