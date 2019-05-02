@@ -12,12 +12,14 @@
 namespace OwnCloudeSDK\Operate;
 
 use OwnCloudeSDK\Connection\PutOperate;
+use OwnCloudeSDK\Exception\FolderNotExist;
 use OwnCloudeSDK\Exception\UnlegalName;
 
 require_once __DIR__."/../Connection/PutOperate.php";
 require_once __DIR__."/../Exceptions/UnlegalName.php";
 require_once __DIR__."/Base.php";
 require_once __DIR__."/FilePath.php";
+require_once __DIR__."/../Exceptions/FolderNotExist.php";
 
 class UploadFile extends Base{
     const API="/remote.php/webdav";
@@ -30,6 +32,7 @@ class UploadFile extends Base{
      * @param bool $isAllowSameFileName 是否允许上传同名文件，如果允许，则存在同名文件时，会在其后加数字
      * @throws UnlegalName
      * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws FolderNotExist
      */
     public function upload($savePath,$uploadFilePath,$fileName,$isAllowSameFileName=false){
         // 文件名检查
@@ -61,6 +64,9 @@ class UploadFile extends Base{
                 // 将最后一个值设置为 false，防止代码陷入死循环，而且理论上，重新生成文件名后，不会再出现上传失败的问题
                 $this->upload($savePath,$uploadFilePath,$uniqueFileName);
                 return ;
+            }
+            if(intval($result['data'])==404){
+                throw new FolderNotExist("文件上传目录不存在");
             }
             throw new \Exception($result['message']);
         }

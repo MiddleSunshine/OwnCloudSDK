@@ -12,6 +12,7 @@
 
 namespace OwnCloudeSDK\test;
 
+use OwnCloudeSDK\Exception\FolderNotExist;
 use OwnCloudeSDK\Exception\UnlegalName;
 use OwnCloudeSDK\Operate\UploadFile;
 
@@ -42,6 +43,8 @@ class UploadFileTest extends Base
             $this->assertTrue(true);
         }catch (UnlegalName $e){
             $this->assertTrue(false,"文件名中存在非法字符");
+        }catch (FolderNotExist $e){
+            $this->assertTrue(false,"对应文件上传目录不存在");
         }
         catch (\Exception $e){
             $this->assertTrue(false,$this->getException($e));
