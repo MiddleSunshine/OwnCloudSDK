@@ -28,6 +28,10 @@ class FolderTest extends Base
     private $folderName="/TestFolder";
     private $moveFolderName="/MoveFolder";
 
+    /**
+     * 测试创建文件夹
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function testCreateFolder(){
         $config=$this->getConfigData();
         $folder=new Folder(
@@ -51,6 +55,11 @@ class FolderTest extends Base
             $this->assertTrue(false,$this->getException($e));
         }
     }
+
+    /**
+     * 测试移动文件夹
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function testMoveFolder(){
         $nowDir=$this->folderName;
         $nextDir=$this->moveFolderName;
@@ -81,6 +90,10 @@ class FolderTest extends Base
             $this->assertTrue(false,$this->getException($e));
         }
     }
+
+    /**
+     * 测试删除文件夹
+     */
     public function testDeleteFolder(){
         $config=$this->getConfigData();
         $folder=new Folder(
