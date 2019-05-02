@@ -11,6 +11,11 @@
  */
 namespace OwnCloudeSDK\Exception;
 
+/**
+ * 在同一目录下创建同名文件夹时就会抛出该异常
+ * Class FolderExist
+ * @package OwnCloudeSDK\Exception
+ */
 class FolderExist extends \Exception{
 
 }

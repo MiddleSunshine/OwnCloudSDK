@@ -24,7 +24,7 @@ require_once __DIR__."/../Operate/FileShare.php";
 
 class FileShareTest extends Base
 {
-    private $shareFolder="/ShareTest";
+    private $shareFolder="/ShareTest";// 首先创建对应的目录
     public function setUp(): void
     {
         // 先创建分享的目录
@@ -41,6 +41,11 @@ class FileShareTest extends Base
             $this->assertTrue(false,$this->getException($e));
         }
     }
+
+    /**
+     * 测试文件分享功能
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function testFileShare(){
         $config=$this->getConfigData();
         $fileShare=new FileShare(
@@ -69,6 +74,11 @@ class FileShareTest extends Base
             $this->assertTrue(false,$this->getException($e));
         }
     }
+
+    /**
+     * 测试创建带密码的公共链接
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function testCreateFileShareWithPassword(){
         $config=$this->getConfigData();
         $fileShare=new FileShare(
@@ -93,12 +103,10 @@ class FileShareTest extends Base
         catch (\Exception $e){
             $this->assertTrue(false,$this->getException($e));
         }
-
-
     }
     protected function tearDown(): void
     {
-        // 删除创建的分享目录
+        // 删除创建的分享目录，为下一次分享做准备
         $config=$this->getConfigData();
         $folder=new Folder(
             $config['domain'],

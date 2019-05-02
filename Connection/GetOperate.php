@@ -36,7 +36,7 @@ class GetOperate extends Base
         $request=new Request("GET",$fullUrl);
         try{
             $response=$client->send($request);
-            return self::returnResult(true,"",$response);
+            return self::returnResult(true,"",$response->getBody()->getContents());
         }catch (\Exception $e){
             return self::returnResult(false,$e->getMessage());
         }

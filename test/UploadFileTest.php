@@ -25,9 +25,14 @@ class UploadFileTest extends Base
     private $fileName="UploadFile.html";
     protected function setUp(): void
     {
+        // 设置上传本地文件
         $this->uploadFile=__DIR__."/".$this->fileName;
     }
 
+    /**
+     * 测试上传文件
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function testUpload(){
         $config=$this->getConfigData();
         $uploadFile=new UploadFile(

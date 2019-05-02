@@ -12,7 +12,11 @@
 
 namespace OwnCloudeSDK\Exception;
 
-
+/**
+ * 路径相关错误操作时，就会抛出该异常
+ * Class WrongPath
+ * @package OwnCloudeSDK\Exception
+ */
 class WrongPath extends \Exception
 {
 
