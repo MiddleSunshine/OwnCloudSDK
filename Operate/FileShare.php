@@ -14,10 +14,12 @@ namespace OwnCloudeSDK\Operate;
 
 use OwnCloudeSDK\Connection\PostOperate;
 use OwnCloudeSDK\Exception\alreadyShared;
+use OwnCloudeSDK\Exception\FolderNotExist;
 
 require_once __DIR__."/Base.php";
 require_once __DIR__."/../Connection/PostOperate.php";
 require_once __DIR__."/../Exceptions/alreadyShared.php";
+require_once __DIR__."/../Exceptions/FolderNotExist.php";
 
 class FileShare extends Base
 {
@@ -75,6 +77,16 @@ class FileShare extends Base
         $this->settedPermission[$permissionType]=1;
     }
 
+    /**
+     * 创建文件/文件夹的分享
+     * @param $shareFilePath string 待分享的文件，文件夹目录
+     * @param $shareUserId string 分享的用户id，组id，
+     * @param string $shareType 分享类型
+     * @return null | string
+     * @throws FolderNotExist
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws alreadyShared
+     */
     public function createFileShare($shareFilePath,$shareUserId,$shareType=self::SHARE_USER){
         if(is_array($shareUserId)){
             throw new \Exception("不支持多用户分享");
@@ -88,11 +100,16 @@ class FileShare extends Base
         $this->permissions==0 && $this->permissions=self::READ_PERMISSION;// 如果用户没有设置权限，则采用最小权限
         $post=new PostOperate($this->userName,$this->password);
         $postData=array(
-            'shareType'=>$shareType,
+            'shareType'=>$this->allShareType[$shareType],
             'shareWith'=>$shareUserId,
             'permissions'=>$this->permissions,
             'path'=>$shareFilePath
         );
+        // 如果是公共链接，则不需要指定分享人，但是需要指定分享名称
+        if($shareType==self::SHARE_PUBLIC){
+            unset($postData['shareWith']);
+            $postData['name']=date("Y-m-d");// 生成同样名字的分享名是不会出错的
+        }
         $url=$this->domain.self::API;
         $result=$post->post($url,$postData,$this->isHttps);
         if(!$result['result']){
@@ -100,7 +117,19 @@ class FileShare extends Base
             if(intval($result['data'])==403){
                 throw new alreadyShared("当前用户已拥有该目录权限");
             }
+            // 分享不存在的目录
+            if(intval($result['data'])==404){
+                throw new FolderNotExist("指定目录/文件夹不存在");
+            }
             throw new \Exception($result['message']);
+        }
+        if($shareType==self::SHARE_PUBLIC){
+            // 则返回对应的分享链接
+            $shareUrl=$result['data']['ocs']['data']['url'];
+            return $shareUrl;
+        }else{
+            // 返回空
+            return null;
         }
     }
     public function createFileShareWithPassword(){

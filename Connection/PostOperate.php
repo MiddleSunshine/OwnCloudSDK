@@ -36,8 +36,9 @@ class PostOperate extends Base
         try{
             $client=self::getClient();
             $request=new Request("POST",$fullUrl);
-            $client->send($request,['form_params'=>$postData]);
-            return self::returnResult();
+            $response=$client->send($request,['form_params'=>$postData]);
+            $responseJson=$response->getBody()->getContents();
+            return self::returnResult(true,"",json_decode($responseJson,true));
         }catch (\Exception $e){
             return self::returnResult(false,$e->getMessage(),$e->getCode());
         }
