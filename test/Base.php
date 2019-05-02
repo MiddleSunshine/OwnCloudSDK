@@ -11,11 +11,20 @@
  */
 namespace OwnCloudeSDK\test;
 
-trait Base{
+use PHPUnit\Framework\TestCase;
+
+require_once __DIR__."/../vendor/autoload.php";
+
+class Base extends TestCase {
     public function getException(\Exception $e){
         return $e->getMessage()."-".$e->getFile()."-".$e->getLine();
     }
     public function getConfigData(){
-        return require_once __DIR__."/../Config.php";
+        return array(
+            'domain'=>"pdtowncloud.pewinner.com",
+            'user_name'=>"admin",
+            'password'=>"admin",
+            'is_https'=>true
+        );
     }
 }

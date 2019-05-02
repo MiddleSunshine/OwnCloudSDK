@@ -1,9 +1,0 @@
-<phpunit
->
-    <php>
-        <const name="domain" value="pdtowncloud.pewinner.com" />
-        <const name="user_name" value="admin" />
-        <const name="password" value="admin" />
-        <const name="is_https" value="1" />
-    </php>
-</phpunit>
