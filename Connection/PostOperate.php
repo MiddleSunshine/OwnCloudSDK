@@ -39,7 +39,7 @@ class PostOperate extends Base
             $client->send($request,['form_params'=>$postData]);
             return self::returnResult();
         }catch (\Exception $e){
-            return self::returnResult(false,$e->getMessage());
+            return self::returnResult(false,$e->getMessage(),$e->getCode());
         }
     }
 }

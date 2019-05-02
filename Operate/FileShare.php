@@ -13,9 +13,11 @@
 namespace OwnCloudeSDK\Operate;
 
 use OwnCloudeSDK\Connection\PostOperate;
+use OwnCloudeSDK\Exception\alreadyShared;
 
 require_once __DIR__."/Base.php";
 require_once __DIR__."/../Connection/PostOperate.php";
+require_once __DIR__."/../Exceptions/alreadyShared.php";
 
 class FileShare extends Base
 {
@@ -94,6 +96,10 @@ class FileShare extends Base
         $url=$this->domain.self::API;
         $result=$post->post($url,$postData,$this->isHttps);
         if(!$result['result']){
+            // 针对 自己分享给自己 或者 分享给已经分享过的用户 均会报403错误，所以在这里设置排除异常类
+            if(intval($result['data'])==403){
+                throw new alreadyShared("当前用户已拥有该目录权限");
+            }
             throw new \Exception($result['message']);
         }
     }

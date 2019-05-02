@@ -12,6 +12,7 @@
 
 namespace OwnCloudeSDK\test;
 
+use OwnCloudeSDK\Exception\alreadyShared;
 use OwnCloudeSDK\Operate\FileShare;
 use OwnCloudeSDK\Operate\Folder;
 
@@ -52,9 +53,13 @@ class FileShareTest extends Base
         $fileShare->setFileSharePermission(FileShare::READ_PERMISSION);
         $fileShare->setFileSharePermission(FileShare::SHARE_PERMISSION);
         try{
-            $fileShare->createFileShare($this->shareFolder,$config['another_user_name']);
+            $shareUserId=$config['another_user_name'];
+            $fileShare->createFileShare($this->shareFolder,$shareUserId);
             $this->assertTrue(true);
-        }catch (\Exception $e){
+        }catch (alreadyShared $e){
+            $this->assertTrue(false,"当前分享对象已拥有该目录权限");
+        }
+        catch (\Exception $e){
             $this->assertTrue(false,$this->getException($e));
         }
     }
