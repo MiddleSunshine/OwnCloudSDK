@@ -21,11 +21,11 @@ class Base extends TestCase {
     }
     public function getConfigData(){
         return array(
-            'domain'=>"pdtowncloud.pewinner.com",
-            'user_name'=>"admin",
-            'password'=>"admin",
+            'domain'=>"",
+            'user_name'=>"",
+            'password'=>"",
             'is_https'=>true,
-            'another_user_name'=>"owncloud"
+            'another_user_name'=>""
         );
     }
 }
