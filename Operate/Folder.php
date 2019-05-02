@@ -35,6 +35,10 @@ class Folder extends Base
     protected static $mkcol;
     protected static $delete;
     protected static $move;
+
+    /**
+     * 单例模式
+     */
     protected function getMKCOL(){
         if(!self::$mkcol){
             self::$mkcol=new MKCOLOperate(
