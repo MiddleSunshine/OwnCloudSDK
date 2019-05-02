@@ -123,7 +123,7 @@ class Folder extends Base
             throw new UnlegalName("新目录存在非法字符串");
         }
         // 移动后地址
-        $nextUrl=$this->domain.self::API.$newFolderDir;
+        $nextUrl=$this->domain.self::API.$newFolderDir.$nowFolderDir;
         $nowUrl=$this->domain.self::API.$nowFolderDir;
         $move=$this->getMove();
         $result=$move->move($nowUrl,$nextUrl,$this->isHttps);
