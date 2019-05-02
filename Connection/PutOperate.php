@@ -50,11 +50,11 @@ class PutOperate extends Base
             );
             $returnStatus=intval($response->getStatusCode());
             if($returnStatus==204){
-                return self::returnResult(false,"重名文件已存在");
+                return self::returnResult(false,"重名文件已存在",$returnStatus);
             }
             return self::returnResult();
         }catch (\Exception $e){
-            return self::returnResult(false,$e->getMessage());
+            return self::returnResult(false,$e->getMessage(),$e->getCode());
         }
     }
 }

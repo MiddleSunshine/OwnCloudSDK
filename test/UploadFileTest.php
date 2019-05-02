@@ -36,7 +36,9 @@ class UploadFileTest extends Base
             $config['is_https']
         );
         try{
-            $uploadFile->upload("/",$this->uploadFile,$this->fileName);
+            $fileEnd=time();
+            $uploadFile->upload("/",$this->uploadFile,$this->fileName.$fileEnd);// 测试上传唯一的文件
+            $uploadFile->upload("/",$this->uploadFile,$this->fileName.$fileEnd,true);// 测试上传重名的文件
             $this->assertTrue(true);
         }catch (UnlegalName $e){
             $this->assertTrue(false,"文件名中存在非法字符");
