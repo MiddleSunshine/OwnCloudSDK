@@ -40,27 +40,4 @@ class FilePathTest extends Base {
         }
         $this->assertTrue(true);
     }
-
-//    /**
-//     * 测试指定目录下的搜索效果
-//     * @throws \GuzzleHttp\Exception\GuzzleException
-//     */
-//    public function testSearch(){
-//        $config=$this->getConfigData();
-//        try{
-//            $filePath=new FilePath(
-//                $config['domain'],
-//                $config['user_name'],
-//                $config['password'],
-//                $config['is_https']
-//            );
-//            $fileData=$filePath->search("/","Do");
-//            print "\r\n根：/ 目录下搜索 Do 时，文件列表为\r\n";
-//            print_r($fileData);
-//            print "\r\n";
-//        }catch (\Exception $e){
-//            $this->assertTrue(false,$this->getException($e));
-//        }
-//        $this->assertTrue(true);
-//    }
 }
