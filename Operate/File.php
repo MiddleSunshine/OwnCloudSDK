@@ -15,13 +15,13 @@ namespace OwnCloudeSDK\Operate;
 
 class File
 {
-    public $filePath;
-    public $fileType;
-    public $createTime;
-    public $fileName;
-    public $usedBytes=0;
-    public $availableBytes=0;
-    public $isFolder=true;
+    public $filePath;// 文件路径
+    public $fileType;// 文件类型
+    public $createTime;// 创建时间
+    public $fileName;// 文件名
+    public $usedBytes=0;// 文件大小/目录已使用大小
+    public $availableBytes=0;// 目录剩余大小
+    public $isFolder=true;// 是否为文件夹
     public function toArray(){
         return array(
             'file_path'=>$this->filePath,
