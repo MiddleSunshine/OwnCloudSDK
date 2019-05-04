@@ -27,7 +27,6 @@ require_once __DIR__."/../vendor/autoload.php";
 class FilePath extends Base
 {
     const API="/remote.php/webdav";
-    const SEARCH_API="/core/search";
     const XML_NAMESPACE="{DAV:}";
 
     /**
@@ -48,27 +47,6 @@ class FilePath extends Base
             throw new \Exception($result['message']);
         }
     }
-
-//    /**
-//     * TODO 该方法存在问题，暂时无法使用
-//     * 搜索指定目录下内容，不支持全局搜索
-//     * @param string $searchDir 搜索目录
-//     * @param string $searchContent 搜索内容
-//     * @param int $page 针对结果做分页效果
-//     * @param int $size
-//     * @return mixed
-//     * @throws \GuzzleHttp\Exception\GuzzleException
-//     */
-//    public function search($searchDir="/",$searchContent="",$page=1,$size=10){
-//        $queryFilePath='files'.$searchDir;
-//        $url=$this->domain.self::SEARCH_API."?query=".$searchContent."&inApps[].".$queryFilePath."&page=".$page."&size=".$size;
-//        $get=new GetOperate($this->userName,$this->password);
-//        $result=$get->get($url,$this->isHttps);
-//        if(!$result['result']){
-//            throw new \Exception($result['message']);
-//        }
-//        return null;
-//    }
 
     /**
      * 辅助函数，解析xml的字符串的
