@@ -12,7 +12,9 @@
 
 namespace OwnCloudeSDK\Operate;
 
-
+/**
+ * 这个类暂时只是为了尝试返回类时创建，但是后期考虑到返回给前端时，只能返回数组，所以这个设想就失败了
+ */
 class File
 {
     public $filePath;// 文件路径
