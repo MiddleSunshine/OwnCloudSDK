@@ -121,7 +121,8 @@ class Folder extends Base
      */
     public function moveFolder($nowFolderDir,$newFolderDir){
         if($nowFolderDir==$newFolderDir){
-            throw new WrongPath("不允许在同一目录中移动");
+            return ;// 如果在同一目录中移动，成功和失败结果都是一样的，所以就不抛异常了
+//            throw new WrongPath("不允许在同一目录中移动");
         }
         if(!self::checkSpecialFileName($newFolderDir)){
             throw new UnlegalName("新目录存在非法字符串");

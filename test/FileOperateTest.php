@@ -13,8 +13,10 @@
 namespace OwnCloudeSDK\test;
 
 
+use OwnCloudeSDK\Exception\FileNotExist;
 use OwnCloudeSDK\Exception\FolderNotExist;
 use OwnCloudeSDK\Exception\UnlegalName;
+use OwnCloudeSDK\Exception\WrongPath;
 use OwnCloudeSDK\Operate\FileOperate;
 use OwnCloudeSDK\Operate\UploadFile;
 
@@ -70,6 +72,45 @@ class FileOperateTest extends Base
             $this->assertTrue(false,"新的文件名存在非法字符串");
         }
         catch (\Exception $e){
+            $this->assertTrue(false,$this->getException($e));
+        }
+    }
+    public function testMoveFile(){
+        $config=$this->getConfigData();
+        $fileOperate=new FileOperate(
+            $config['domain'],
+            $config['user_name'],
+            $config['password'],
+            $config['is_https']
+        );
+        try{
+            $fileOperate->moveFile("/","/Documents/",$this->uploadFileName);
+            $this->assertTrue(true);
+        }catch (FileNotExist $e){
+            $this->assertTrue(false,"待移动文件不存在");
+        }
+        catch (WrongPath $e){
+            $this->assertTrue(false,"待移动目录不存在");
+        }
+        catch (\Exception $e){
+            $this->assertTrue(false,$this->getException($e));
+        }
+    }
+    public function testDelete(){
+        $config=$this->getConfigData();
+        $fileOperate=new FileOperate(
+            $config['domain'],
+            $config['user_name'],
+            $config['password'],
+            $config['is_https']
+        );
+        try{
+            $fileOperate->deleteFile("/".$this->renameFile);
+            $fileOperate->deleteFile("/".$this->uploadFileName);
+            $this->assertTrue(true);
+        }catch (FileNotExist $e){
+            $this->assertTrue(false,"待删除目录不存在");
+        }catch (\Exception $e){
             $this->assertTrue(false,$this->getException($e));
         }
     }
