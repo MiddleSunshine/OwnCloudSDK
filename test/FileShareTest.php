@@ -21,7 +21,7 @@ require_once __DIR__."/Base.php";
 require_once __DIR__."/../Operate/Folder.php";
 require_once __DIR__."/../Operate/FileShare.php";
 
-
+// 我去，我之前这么牛的吗？我这几年是废了吗？
 class FileShareTest extends Base
 {
     private $shareFolder="/ShareTest";// 首先创建对应的目录
